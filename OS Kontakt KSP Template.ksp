@@ -27,7 +27,7 @@ on init
 	
 	set_control_par_str ($INST_WALLPAPER_ID,$CONTROL_PAR_PICTURE,"background")
 	
-{---------- Variable Declarations ----------}
+{---------- Start Variable Declarations ----------}
 
 	{BPM Sync tempo division arrays}
 
@@ -100,7 +100,9 @@ on init
   	declare %cfp_sync_unit[$NUM_FX_SYNC_TIMES] := ($NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_WHOLE_TRIPLET, $NI_SYNC_UNIT_HALF, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_HALF_TRIPLET, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_QUARTER_TRIPLET, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_8TH_TRIPLET, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_16TH_TRIPLET, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_32ND_TRIPLET, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_64TH_TRIPLET)
   	declare %cfp_sync_value[$NUM_FX_SYNC_TIMES] := (1000000, 545454, 1000000, 1000000, 545454, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 818181, 1000000)
 
-{---------- Variable Declarations ----------}
+{----------End Variable Declarations ----------}
+
+{----------Start GUI Declarations ----------}
 
 {Slider}
 	declare ui_slider $mySliderKnob (0, 1000000)
@@ -148,6 +150,8 @@ on init
 		make_persistent($myMenu)
 
 end on		
+
+{----------End GUI Declarations ----------}
 
 {----------------------------------------------End Init---------------------}
 
