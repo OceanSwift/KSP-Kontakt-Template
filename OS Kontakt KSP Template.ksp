@@ -1,0 +1,182 @@
+{------------------------------------------------------------}
+{
+Vendor: Ocean Swift
+Device: KSP Template
+Version: 1.0
+2019
+}
+{------------------------------------------------------------}
+
+{---------------Init Callback---------------}
+
+on init
+
+{---------- Setup ----------}
+
+	set_script_title("This Device")
+	message("This Device by This Developer")
+	set_ui_height(8)
+	make_perfview
+	set_snapshot_type(1)
+
+{Icon}
+
+    set_control_par_str($INST_ICON_ID,$CONTROL_PAR_PICTURE,"icon")
+
+{Background}
+	
+	set_control_par_str ($INST_WALLPAPER_ID,$CONTROL_PAR_PICTURE,"background")
+	
+
+{---------- Variable Declarations ----------}
+
+	{BPM Sync tempo division arrays}
+
+	declare %dly_sync_unit[$NUM_FX_SYNC_TIMES] := ($NI_SYNC_UNIT_64TH_TRIPLET, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_32ND_TRIPLET, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_16TH_TRIPLET, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_8TH_TRIPLET, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_QUARTER_TRIPLET, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_HALF_TRIPLET, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_HALF, $NI_SYNC_UNIT_WHOLE_TRIPLET, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_WHOLE)
+  	declare !dly_sync_string[$NUM_FX_SYNC_TIMES]
+	   !dly_sync_string[0] := "1/64 T"
+	   !dly_sync_string[01] := "1/64"
+	   !dly_sync_string[02] := "1/32 T"
+	   !dly_sync_string[03] := "1/64 D"
+	   !dly_sync_string[04] := "1/32"
+	   !dly_sync_string[05] := "1/16 T"
+	   !dly_sync_string[06] := "1/32 D"
+	   !dly_sync_string[07] := "1/16"
+	   !dly_sync_string[08] := "1/8 T"
+	   !dly_sync_string[09] := "1/16 D"
+	   !dly_sync_string[10] := "1/8"
+	   !dly_sync_string[11] := "1/4 T"
+	   !dly_sync_string[12] := "1/8 D"
+	   !dly_sync_string[13] := "1/4"
+	   !dly_sync_string[14] := "1/2 T"
+	   !dly_sync_string[15] := "1/4 D"
+	   !dly_sync_string[16] := "1/2"
+	   !dly_sync_string[17] := "1/1 T"
+	   !dly_sync_string[18] := "1/2 D"
+	   !dly_sync_string[19] := "1/1"
+  	declare %dly_sync_value[$NUM_FX_SYNC_TIMES] := (0, 0, 0, 454545, 0, 0, 181818, 0, 0, 181818, 0, 0, 181818, 0, 0, 181818, 0, 0, 181818, 0)  	
+  	declare %mod_sync_unit[$NUM_MOD_SYNC_TIMES] := ($NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_WHOLE_TRIPLET, $NI_SYNC_UNIT_HALF, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_HALF_TRIPLET, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_QUARTER_TRIPLET, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_8TH_TRIPLET, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_16TH_TRIPLET, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_32ND_TRIPLET, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_256TH)
+	declare !mod_sync_string[$NUM_MOD_SYNC_TIMES]
+	  	!mod_sync_string[0] := "12/1"
+	  	!mod_sync_string[1] := "11/1"
+	  	!mod_sync_string[2] := "10/1"
+	  	!mod_sync_string[3] := "9/1"
+	  	!mod_sync_string[4] := "8/1"
+	  	!mod_sync_string[5] := "7/1"
+	  	!mod_sync_string[6] := "6/1"
+	  	!mod_sync_string[7] := "5/1"
+	  	!mod_sync_string[8] := "4/1"
+	  	!mod_sync_string[9] := "3/1"
+	  	!mod_sync_string[10] := "2/1"
+	  	!mod_sync_string[11] := "1/1"
+	  	!mod_sync_string[12] := "1/2 D"
+	  	!mod_sync_string[13] := "1/1 T"
+	  	!mod_sync_string[14] := "1/2"
+	  	!mod_sync_string[15] := "1/4 D"
+	  	!mod_sync_string[16] := "1/2 T"
+	  	!mod_sync_string[17] := "1/4"
+	  	!mod_sync_string[18] := "1/8 D"
+	  	!mod_sync_string[19] := "1/4 T"
+	  	!mod_sync_string[20] := "1/8"
+	  	!mod_sync_string[21] := "1/16 D"
+	  	!mod_sync_string[22] := "1/8 T"
+	  	!mod_sync_string[23] := "1/16"
+	  	!mod_sync_string[24] := "1/32 D"
+	  	!mod_sync_string[25] := "1/16 T"
+	  	!mod_sync_string[26] := "1/32"
+	  	!mod_sync_string[27] := "1/64 D"
+	  	!mod_sync_string[28] := "1/32 T"
+	  	!mod_sync_string[29] := "1/64"
+	  	!mod_sync_string[30] := "1/128 D"
+	  	!mod_sync_string[31] := "1/64 T"
+	  	!mod_sync_string[32] := "1/128"
+	  	!mod_sync_string[33] := "1/256"
+	declare %mod_sync_value[$NUM_MOD_SYNC_TIMES] := (0, 90909, 181818, 272727, 363636, 454545, 545454, 636363, 727272, 818181, 909090, 999999, 818181, 999999, 999999, 818181, 999999, 999999, 818181, 999999, 999999, 818181, 999999, 999999, 818181, 999999, 999999, 545454, 999999, 999999, 818181, 999999, 909090, 999999)	  	  	
+  	declare %cfp_sync_unit[$NUM_FX_SYNC_TIMES] := ($NI_SYNC_UNIT_WHOLE, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_WHOLE_TRIPLET, $NI_SYNC_UNIT_HALF, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_HALF_TRIPLET, $NI_SYNC_UNIT_QUARTER, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_QUARTER_TRIPLET, $NI_SYNC_UNIT_8TH, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_8TH_TRIPLET, $NI_SYNC_UNIT_16TH, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_16TH_TRIPLET, $NI_SYNC_UNIT_32ND, $NI_SYNC_UNIT_256TH, $NI_SYNC_UNIT_32ND_TRIPLET, $NI_SYNC_UNIT_64TH, $NI_SYNC_UNIT_64TH_TRIPLET)
+  	declare %cfp_sync_value[$NUM_FX_SYNC_TIMES] := (1000000, 545454, 1000000, 1000000, 545454, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 1000000, 818181, 1000000, 818181, 1000000)
+
+{---------- Variable Declarations ----------}
+
+{Slider}
+	declare ui_slider $mySliderKnob (0, 1000000)
+		set_control_par_str(get_ui_id($mySliderKnob ),  $CONTROL_PAR_PICTURE, "knobs")
+		set_control_par(get_ui_id($mySliderKnob), $CONTROL_PAR_MOUSE_BEHAVIOUR, -500)
+		move_control_px($mySliderKnob, 525,182 )
+		make_persistent($mySliderKnob)
+
+{Label}
+	declare ui_label $myLabel (1,1)
+		set_control_par (get_ui_id($myLabel),$CONTROL_PAR_WIDTH,50)
+		set_control_par (get_ui_id($myLabel),$CONTROL_PAR_HEIGHT,18)
+		set_control_par (get_ui_id($myLabel),$CONTROL_PAR_TEXT_ALIGNMENT,1)
+		move_control_px($myLabel, 239,230)
+		set_text($myLabel, "Voices")
+
+{Button}
+	declare ui_button $myButton
+		set_control_par_str(get_ui_id($myButton),$CONTROL_PAR_PICTURE,"buttons")
+		set_control_par (get_ui_id($myButton),$CONTROL_PAR_WIDTH,60)
+		set_control_par (get_ui_id($myButton),$CONTROL_PAR_HEIGHT,18)
+		set_control_par_str(get_ui_id($myButton),$CONTROL_PAR_TEXT,"")
+		set_control_par (get_ui_id($myButton),$CONTROL_PAR_TEXT_ALIGNMENT,1)
+		move_control_px($myButton,455,189)
+		make_persistent($myButton)
+
+{Value Edit}
+	declare ui_value_edit $myValue (-100,100,1)
+	 	set_text ($myValue,"")
+	 	set_control_par (get_ui_id($myValue),$CONTROL_PAR_WIDTH,35)
+	 	move_control_px($myValue, 146,35 ) 
+	 	make_persistent($myValue)
+
+{Menu}
+	declare ui_menu $myMenu
+	 	add_menu_item ($myMenu, "Cake  ",0)
+ 		add_menu_item ($myMenu, "Taco  ",1)
+ 		add_menu_item ($myMenu, "Steak  ",2)
+ 		add_menu_item ($myMenu, "Hummus  ",3)		
+		set_control_par (get_ui_id($myMenu),$CONTROL_PAR_WIDTH,40)
+		set_control_par (get_ui_id($myMenu),$CONTROL_PAR_HEIGHT,18)
+		set_control_par_str(get_ui_id($myMenu),$CONTROL_PAR_PICTURE,"buttons")
+		set_control_par (get_ui_id($myMenu),$CONTROL_PAR_TEXT_ALIGNMENT,1)
+ 		move_control_px($myMenu, 249,76)
+		make_persistent($myMenu)
+
+end on		
+
+{----------------------------------------------End Init---------------------}
+
+{----------------------------------------------Start Persistence Event---------------------}
+
+on persistence_changed
+
+end on
+
+{----------------------------------------------End Persistence Event---------------------}
+
+{----------------------------------------------Start Control Events---------------------}
+
+on ui_control($mySliderKnob)
+	set_engine_par($ENGINE_PAR_SUSTAIN,$mySliderKnob,0,0,-1)
+end on
+
+on ui_control($myButton)
+	set_engine_par($ENGINE_PAR_EFFECT_BYPASS, 1-$myButton,-1,4,1)
+end on
+
+{----------------------------------------------End Control Events---------------------}
+
+{-------------------------------------Start On Note Event---------------------------}
+
+on note
+	{Geoups}
+	{
+	disallow_group($ALL_GROUPS)
+	allow_group($waveTableChoiceA)
+	allow_group($waveTableChoiceB)
+	}
+end on
+
+{-------------------------------------End On Note Event---------------------------}
+
+{-------------------------------------END SCRIPT---------------------------}
