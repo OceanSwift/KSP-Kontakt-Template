@@ -27,7 +27,6 @@ on init
 	
 	set_control_par_str ($INST_WALLPAPER_ID,$CONTROL_PAR_PICTURE,"background")
 	
-
 {---------- Variable Declarations ----------}
 
 	{BPM Sync tempo division arrays}
@@ -116,7 +115,7 @@ on init
 		set_control_par (get_ui_id($myLabel),$CONTROL_PAR_HEIGHT,18)
 		set_control_par (get_ui_id($myLabel),$CONTROL_PAR_TEXT_ALIGNMENT,1)
 		move_control_px($myLabel, 239,230)
-		set_text($myLabel, "Voices")
+		set_text($myLabel, "Label")
 
 {Button}
 	declare ui_button $myButton
@@ -178,8 +177,7 @@ on note
 	{Geoups}
 	{
 	disallow_group($ALL_GROUPS)
-	allow_group($waveTableChoiceA)
-	allow_group($waveTableChoiceB)
+	allow_group($allowedGroup)
 	}
 end on
 
